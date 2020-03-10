@@ -78,3 +78,45 @@ Artisan命令
 
 Laravel 项目中使用 Bootstrap 前端框架
 	composer require laravel/ui --dev
+	laravel6.X框架使用命令：composer require laravel/ui "1.x" --dev
+
+	安装NPM：
+		下载安装包：wget https://npm.taobao.org/mirrors/node/v13.9.0/node-v13.9.0-linux-x64.tar.gz 
+		解压并改目录名
+			tar -xvf node-v13.9.0-linux-x64.tar.gz 
+			mv node-v13.9.0-linux-x64 node
+		配置环境变量
+			vi /etc/profile
+		添加
+			export NODE_HOME=/var/local/node
+			export PATH=$NODE_HOME/bin:$PATH
+		生效配置文件,查看版本
+			source /etc/profile
+			node -v
+			npm -v
+
+	安装yarn：
+		下载安装包：wget https://github.com/yarnpkg/yarn/releases/download/v1.22.1/yarn-v1.22.1.tar.gz
+		解压并改目录名：tar -zxvf yarn-v1.22.1.tar.gz
+						mv yarn-v1.22.1 yarn
+		配置环境变量
+			vi /etc/profile
+			export PATH=$PATH:/var/local/yarn/bin
+		生效配置文件,查看版本
+			source /etc/profile
+			yarn -v
+	
+	设置安装器来使用国内的淘宝镜像加速
+		npm config set registry=https://registry.npm.taobao.org
+		yarn config set registry 'https://registry.npm.taobao.org'
+
+	用 Yarn 对扩展包进行安装，请在项目根目录下运行以下命令进行安装：
+		yarn install --no-bin-links
+		yarn add cross-env
+
+	导入 Bootstrap：
+		文件resources/sass/app.scss中，只留@import '~bootstrap/scss/bootstrap';
+
+	编译app.scss文件
+		npm run watch-poll
+
