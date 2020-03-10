@@ -17,6 +17,8 @@
 	更改composer国内镜像源：composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 	进入/home/wwwroot/目录下，安装laravel项目：composer create-project laravel/laravel weibo --prefer-dist "6.*"
 
+	改时区 config/app.php,'timezone' => 'PRC'
+
 修改.env文件
 	APP_NAME=Weibo
 	APP_ENV=local
@@ -125,4 +127,32 @@ Laravel 项目中使用 Bootstrap 前端框架
 		blade文件中
 			<link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+指定命名空间创建模型
+	php artisan make:model Models/Article	
+	创建模型的同时顺便创建数据库迁移
+	php artisan make:model Models/Article -m
 
+进入 Tinker 环境创建对象
+	vi /usr/local/php/etc/php.ini，搜索 disable_functions=...，删除其中的exec
+	重启php服务：systemctl restart php-fpm
+	php artisan tinker
+	App\Models\User::create(['name'=> 'candy3721','email'=>'402404932@qq.com','password'=>bcrypt('123456')])
+
+更新用户对象
+	第一种是通过给用户对象属性进行赋值，赋值成功后再调用 save 方法进行保存更新；
+		$user = User::first()
+		$user->name = 'Monkey'
+		$user->save()
+	第二种则是直接调用 update 方法进行更新
+		$user->update(['name'=>'Summer'])
+
+用resource 方法来定义用户资源路由
+	Route::resource('users', 'UsersController');
+	等同于：
+		Route::get('/users', 'UsersController@index')->name('users.index'); 	#显示所有用户列表的页面
+		Route::get('/users/create', 'UsersController@create')->name('users.create');	#创建用户的页面
+		Route::get('/users/{user}', 'UsersController@show')->name('users.show');	#根据ID显示用户个人信息的页面
+		Route::post('/users', 'UsersController@store')->name('users.store');	#创建用户,保存
+		Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');	#编辑用户个人资料的页面
+		Route::patch('/users/{user}', 'UsersController@update')->name('users.update');	#更新用户，保存
+		Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');	#删除用户
